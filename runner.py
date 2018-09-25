@@ -12,7 +12,7 @@ if not os.path.exists("slurm_scripts"):
 
 code_dir = '/private/home/willwhitney/code'
 
-basename = "handful-seeds3"
+basename = "handful-seeds-xvel"
 grids = [
     {
         "env": [

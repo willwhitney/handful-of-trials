@@ -10,7 +10,28 @@ from gym.envs.mujoco import mujoco_env
 import gym.envs.mujoco
 
 class VisibleSwimmerEnv(gym.envs.mujoco.SwimmerEnv):
+    def __init__(self):
+        super().__init__()
+        self.prev_qpos = None
+
+
     def _get_obs(self):
-        qpos = self.sim.data.qpos
-        qvel = self.sim.data.qvel
-        return np.concatenate([qpos.flat, qvel.flat])
+        if self.prev_qpos is not None:
+            xvel = (self.sim.data.qpos.flat[:1] - self.prev_qpos[:1]) / self.dt
+        else:
+            xvel = np.zeros(1)
+        return np.concatenate([
+            xvel,
+            self.sim.data.qpos.flat[1:],
+            self.sim.data.qvel.flat,
+        ])
+
+    def step(self, action):
+        self.prev_qpos = np.copy(self.sim.data.qpos.flat)
+        return super().step(action)
+
+
+    def reset_model(self):
+        super().reset_model()
+        self.prev_qpos = np.copy(self.sim.data.qpos.flat)
+        return self._get_obs()
