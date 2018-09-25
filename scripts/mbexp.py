@@ -8,6 +8,11 @@ import pprint
 
 from dotmap import DotMap
 
+import sys
+sys.path.insert(0, ".")
+
+# import ipdb; ipdb.set_trace()
+
 from dmbrl.misc.MBExp import MBExperiment
 from dmbrl.controllers.MPC import MPC
 from dmbrl.config import create_config
@@ -39,6 +44,8 @@ if __name__ == "__main__":
                         help='Override default parameters, see https://github.com/kchua/handful-of-trials#overrides')
     parser.add_argument('-logdir', type=str, default='log',
                         help='Directory to which results will be logged (default: ./log)')
+    parser.add_argument('-seed', type=int, default=0,
+                        help='not a real seed, but different seeds are used every run')
     args = parser.parse_args()
 
     main(args.env, "MPC", args.ctrl_arg, args.override, args.logdir)

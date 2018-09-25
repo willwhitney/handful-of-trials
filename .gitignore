@@ -2,3 +2,6 @@
 tags
 *.pyc
 log/
+slurm_logs/
+slurm_scripts/
+monitor-logs/
