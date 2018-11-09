@@ -22,12 +22,12 @@ class VisibleHalfCheetahConfigModule:
     TASK_HORIZON = 1000
     NTRAIN_ITERS = 100000
     NROLLOUTS_PER_ITER = 1
-    PLAN_HOR = 30
+    PLAN_HOR = 20
     MODEL_IN, MODEL_OUT = 24, 18
     GP_NINDUCING_POINTS = 300
 
     def __init__(self):
-        experiment_name = "paper-xvel_taskhorizon{}_trainiters{}_rolloutsperiter{}_planhor_{}".format(
+        experiment_name = "paper-xvel2_taskhorizon{}_trainiters{}_rolloutsperiter{}_planhor_{}".format(
                 self.TASK_HORIZON, self.NTRAIN_ITERS, self.NROLLOUTS_PER_ITER, self.PLAN_HOR)
         experiment_name += '_seed' + str(uuid.uuid4())[:8]
 

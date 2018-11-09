@@ -12,7 +12,7 @@ if not os.path.exists("slurm_scripts"):
 
 code_dir = '/private/home/willwhitney/code'
 
-basename = "handful-seeds-xvel"
+basename = "handful-seeds-xvel2"
 grids = [
     {
         "env": [
@@ -93,8 +93,8 @@ for job in jobs:
         slurmfile.write("#SBATCH --export=ALL\n")
         slurmfile.write("#SBATCH --signal=USR1@600\n")
         slurmfile.write("#SBATCH --time=3-00\n")
-        # slurmfile.write("#SBATCH -p dev\n")
-        slurmfile.write("#SBATCH -p priority\n")
+        slurmfile.write("#SBATCH -p dev\n")
+        # slurmfile.write("#SBATCH -p priority\n")
         slurmfile.write("#SBATCH -N 1\n")
         slurmfile.write("#SBATCH --mem=60gb\n")
 
