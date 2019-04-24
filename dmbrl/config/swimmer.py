@@ -8,6 +8,7 @@ from dotmap import DotMap
 import gym
 import os
 import uuid
+import math
 
 from dmbrl.misc.DotmapUtils import get_required_argument
 from dmbrl.modeling.layers import FC
@@ -25,10 +26,15 @@ class SwimmerConfigModule:
     PLAN_HOR = 100
     MODEL_IN, MODEL_OUT = 12, 10
     GP_NINDUCING_POINTS = 300
+    CEM_CANDIDATES = 50
+    CEM_STEPS = 3
+    CEM_ELITES = math.ceil(CEM_CANDIDATES / 10)
+
 
     def __init__(self):
-        experiment_name = "paper-xvel2_taskhorizon{}_trainiters{}_rolloutsperiter{}_planhor_{}".format(
-                self.TASK_HORIZON, self.NTRAIN_ITERS, self.NROLLOUTS_PER_ITER, self.PLAN_HOR)
+        experiment_name = "rebut2_taskhorizon{}_trainiters{}_rolloutsperiter{}_planhor_{}_cand{}_steps{}".format(
+                self.TASK_HORIZON, self.NTRAIN_ITERS, self.NROLLOUTS_PER_ITER, self.PLAN_HOR, 
+                self.CEM_CANDIDATES, self.CEM_STEPS)
         experiment_name += '_seed' + str(uuid.uuid4())[:8]
 
         self.ENV = gym.make(self.ENV_NAME)
@@ -49,9 +55,9 @@ class SwimmerConfigModule:
                 "popsize": 2500
             },
             "CEM": {
-                "popsize": 500,
-                "num_elites": 50,
-                "max_iters": 5,
+                "popsize": self.CEM_CANDIDATES,
+                "num_elites": self.CEM_ELITES,
+                "max_iters": self.CEM_STEPS,
                 "alpha": 0.1
             }
         }
